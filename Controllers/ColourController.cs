@@ -5,7 +5,7 @@ using ColoursAPI.Data;
 
 namespace ColoursAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class ColourController : ControllerBase
     {
@@ -39,6 +39,44 @@ namespace ColoursAPI.Controllers
             _context.SaveChanges();
 
             return new JsonResult(Ok(colour));
+        }
+
+        // Get
+        [HttpGet]
+        public JsonResult Get(int id)
+        {
+            var result = _context.Colours.Find(id);
+
+            if (result == null)
+            {
+                return new JsonResult(NotFound());
+            }
+            
+            return new JsonResult(Ok(result));
+        }
+
+        // Get all
+        [HttpGet]
+        public JsonResult GetAll()
+        {
+            var result = _context.Colours.ToList();
+
+            return new JsonResult(Ok(result));
+        }
+
+        // Delete
+        [HttpDelete]
+        public JsonResult Delete(int id)
+        {
+            var result = _context.Colours.Find(id);
+
+            if (result == null)
+            {
+                return new JsonResult(NotFound());
+            }
+            _context.Colours.Remove(result);
+            _context.SaveChanges();
+            return new JsonResult(NoContent());
         }
     }
 }
