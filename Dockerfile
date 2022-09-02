@@ -20,3 +20,5 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "ColoursAPI.dll"]
+
+# docker run -it --rm -p 5200:80 --name ColourAPI_Container lonelymous/coloursapi
